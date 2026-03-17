@@ -1,0 +1,11 @@
+{
+	"mcpServers": {
+		"cloudflare": {
+			"url": "https://docs.mcp.cloudflare.com/mcp"
+		},
+		"freee-local": {
+			"type": "http",
+			"url": "http://localhost:8787/mcp"
+		}
+	}
+}

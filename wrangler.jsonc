@@ -1,0 +1,54 @@
+/**
+ * For more details on how to configure Wrangler, refer to:
+ * https://developers.cloudflare.com/workers/wrangler/configuration/
+ */
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "freee-remote-mcp",
+	"main": "src/index.ts",
+	"compatibility_date": "2026-02-28",
+	"observability": {
+		"enabled": true
+	},
+	"compatibility_flags": ["nodejs_compat"],
+	/**
+	 * KV Namespaces
+	 * Create with: wrangler kv namespace create OAUTH_KV
+	 */
+	"kv_namespaces": [
+		{
+			"binding": "OAUTH_KV",
+			"id": "a2a822e8e52a48c5ac9015347decac69"
+		}
+	],
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "FREEE_TOKEN_DO",
+				"class_name": "FreeeTokenStoreDO"
+			},
+			{
+				"name": "PENDING_STATE_DO",
+				"class_name": "PendingStateDO"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": ["FreeeTokenStoreDO", "PendingStateDO"]
+		}
+	],
+	/**
+	 * Environment Variables (non-secret)
+	 * Set WORKER_URL to your deployed Worker URL.
+	 */
+	"vars": {
+		"WORKER_URL": "https://freee-remote-mcp.your-subdomain.workers.dev",
+		"FREEE_CLIENT_ID": "your_freee_client_id_here"
+	}
+	/**
+	 * Secrets (set via: wrangler secret put <NAME>)
+	 * - FREEE_CLIENT_SECRET
+	 */
+}
